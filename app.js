@@ -10,7 +10,8 @@ var express = require('express')
 var app = module.exports = express.createServer();
 
 // Configuration
-
+var port = (process.env.VMC_APP_PORT || process.env.C9_PORT); //c9 port
+//var port = 3000; //local port
 app.configure(function(){
  // app.set('views', __dirname + '/views');
  // app.set('view engine', 'jade');
@@ -34,6 +35,6 @@ app.get('/', routes.index);
 
 app.get('/data', api.data);
 
-app.listen(3000, function(){
+app.listen(port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
