@@ -1,4 +1,4 @@
-define(['boot/bootunderscore', 'backbone/backbone'], function(_) {
+define(['order!boot/bootunderscore', 'order!backbone/backbone'], function(_) {
     console.log('backbone loaded' + _ + '->' + Backbone)
 
      _.noConflict()
