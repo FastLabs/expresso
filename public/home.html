@@ -3,11 +3,18 @@
 <html>
 <head>
     <title>home for expresso</title>
+
     <script type="text/javascript" data-main='javascripts/main' src='/javascripts/require/require.js'></script>
     <script type="text/template" id='first_template'>
         Future currency: <%= currency %>
     </script>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <style type="text/css">
+        .sidebar-nav{
+            padding: 9px;
+        }
+    </style>
 </head>
 <body>
     <div> <a> home </a> </div>
@@ -17,16 +24,27 @@
 
     <script type="text/javascript">
         window.onload = function () {
-            FutureView = require('FutureView');
-            Future = require('FutureModule');
-            future = new Future();
-            view = new FutureView({model: future});
-            view.render();
-
-
-
+          //  FutureView = require('futureview');
+//            Future = require('FutureModule');
+//            future = new Future();
+//            view = new FutureView({model: future});
+//            view.render();
+          //  views = require('simpleviews');
         }
     </script>
+<div class="container-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                    Available entities
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
-define('backbone', ['backbone/backbone'], function() {
-    console.log('backbone loaded');
-    _.noConflict();
-    $.noConflict();
-    return Backbone.noConflict();
-});
+define(['boot/bootunderscore', 'backbone/backbone'], function(_) {
+    console.log('backbone loaded' + _ + '->' + Backbone)
+
+     _.noConflict()
+    //$.noConflict();
+    return Backbone.noConflict()
+})

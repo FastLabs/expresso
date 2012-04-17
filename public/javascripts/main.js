@@ -1,3 +1,5 @@
-require(['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone', 'mymod'], function () {
+require([ 'mymod', 'futureview','simpleviews'], function () {
     console.log('module loaded');
 });
+
+

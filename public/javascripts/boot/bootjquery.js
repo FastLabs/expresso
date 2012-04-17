@@ -1,4 +1,4 @@
-define('query', ['backbone/jquery'], function () {
+define(['backbone/jquery'], function () {
     console.log('jquery module loaded');
     return $;
 });
