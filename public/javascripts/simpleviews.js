@@ -56,18 +56,89 @@ define( ['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone'], functio
     ])
 
 
+  var TextInputView = Backbone.View.extend({
+        tagName: 'input'
+        , className: 'input-xlarge'
+        , setValue: function(value) {
+            this.$el.val(value)
+        }
+    })
+
+
+
+    var InputView = Backbone.View.extend({
+            className: 'control-group'
+            , tagName: 'div'
+            , render: function() {
+                if (this.el !== undefined) {
+                    //TODO: validate the model
+                    this.$el.html(templ.input(this.model))
+                    var x = new TextInputView({id: this.model.identifier}).$el
+                        x.insertBefore(this.$el.find('span.help-inline'))
+                    return this
+                }
+            }
+            , inlineMessage: function(message, decorator) {
+                this.ok()
+                if(decorator) {
+                    this.$el.addClass(decorator)
+                }
+                this.$el.find('span.help-inline').text(message).show()
+            }
+            , blockMessage: function (message, decorator) {
+                this.ok()
+                if(decorator) {
+                    this.$el.addClass(decorator)
+                }
+                this.$el.find('p.help-block').text(message).show()
+            }
+            , ok: function() {
+                this.$el.attr('class', this.className)
+                this.$el.find('span.help-inline').hide()
+                this.$el.find('p.help-block').hide()
+            }
+        }
+    )
+
+    var FormModel = Backbone.Model.extend({
+         defaults: {
+             title: ''
+         }
+        , initialize: function() {
+
+        }
+
+    })
+
     var FormView = Backbone.View.extend({
-        title: '',
+         el: '#formContainer'
+        , content: []
+        , initialize: function() {
+            console.log('Form View Initialized' )
+            this.title = this.model.get('title')
+            var that = this
+            this.model.on('change:title', function (model, title) {
+                that.setTitle(title)
+            })
+        }
+        , setTitle:  function(title) {
+            $('legend').html(title)
+        }
+        , render: function () {
+            $(this.el).html(templ.form({title: this.title}))
+            var entity = this.model.get('entity')
+            var that = this
+            if(entity !== undefined) {
+                var formActionBar = $('.form-actions')
+                var attrNames = _.keys( entity.attributes)
+                _.each(attrNames, function(attr) {
+                    var inputView = new InputView({model: {title: attr, identifier: attr}})
+                    inputView.render()
+                    inputView.$el.insertBefore(formActionBar)
+                    that.content.push(inputView)
+                })
 
-        initialize: function() {
-            console.log('Form View Initialized' );
-        },
-
-        render: function () {
-            $(this.el).html(templ.form({title: this.title}));
-            var model = new FieldModel();
-            //condole.log(model.toJSON());
-            $('.control-group').html(templ.input(model.toJSON()));
+            }
             return this;
         }
     });
