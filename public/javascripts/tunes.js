@@ -1,0 +1,2 @@
+define(['boot/bootunderscore', ''], function(){
+    })
