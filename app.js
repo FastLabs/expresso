@@ -7,11 +7,11 @@ var express = require('express')
   , routes = require('./routes')
   , api = require('./routes/api').api;
 
-var app = module.exports = express.createServer();
+var app = module.exports = express.createServer()
 
 // Configuration
-var port = (process.env.VMC_APP_PORT || process.env.C9_PORT); //c9 port
-//var port = 3000; //local port
+//var port = (process.env.VMC_APP_PORT || process.env.C9_PORT); //c9 port
+var port = 3000; //local port
 app.configure(function(){
  // app.set('views', __dirname + '/views');
  // app.set('view engine', 'jade');

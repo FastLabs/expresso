@@ -4,6 +4,8 @@ class FirstClass
     constructor: (@name)->
     doIt: () ->
         console.log 'hello coffee ' + @name
+    doItAgain: (nm) ->
+      @name = nm
 
 class SecondClass
     constructor: (@name)->

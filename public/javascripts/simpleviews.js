@@ -3,12 +3,12 @@ define( ['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone'], functio
 
     require(['./require/text!templates/form.html'], function(tmpl) {
         templ.form = _.template(tmpl);
-        console.log('template loaded ' + tmpl);
+       // console.log('template loaded ' + tmpl);
     });
 
     require(['./require/text!templates/input.html'], function(tmpl) {
         templ.input = _.template(tmpl);
-        console.log('template loaded ' + tmpl);
+       // console.log('template loaded ' + tmpl);
     });
 
     //defines the list of the data structures,
@@ -73,8 +73,10 @@ define( ['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone'], functio
                 if (this.el !== undefined) {
                     //TODO: validate the model
                     this.$el.html(templ.input(this.model))
-                    var x = new TextInputView({id: this.model.identifier}).$el
-                        x.insertBefore(this.$el.find('span.help-inline'))
+                        console.log(this.model.value)
+                    var x = new TextInputView({id: this.model.identifier})
+                        x.$el.insertBefore(this.$el.find('span.help-inline'))
+                        x.setValue(this.model.value)
                     return this
                 }
             }
@@ -132,7 +134,9 @@ define( ['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone'], functio
                 var formActionBar = $('.form-actions')
                 var attrNames = _.keys( entity.attributes)
                 _.each(attrNames, function(attr) {
-                    var inputView = new InputView({model: {title: attr, identifier: attr}})
+                    var inputView = new InputView({model: {title: attr
+                        , identifier: attr
+                        , value: entity.get(attr)}})
                     inputView.render()
                     inputView.$el.insertBefore(formActionBar)
                     that.content.push(inputView)
@@ -164,9 +168,12 @@ define( ['boot/bootjquery', 'boot/bootunderscore', 'boot/bootbackbone'], functio
 
 
     return {
-        structuresView : StructuresView,
-        structures: Structures,
-        form : FormView,
-        template : templ
+        text: TextInputView
+        , formModel: FormModel
+        , form: FormView
+        , structuresView : StructuresView
+        , structures: Structures
+        , form : FormView
+        , template : templ
     }
 })

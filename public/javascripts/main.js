@@ -1,4 +1,4 @@
-require([ 'mymod', 'futureview','simpleviews'], function () {
+require([ 'mymod', 'futureview','simpleviews', 'templates', 'myplugin'], function () {
     console.log('module loaded');
 });
 
