@@ -8,9 +8,14 @@
     <script type="text/javascript" src="javascripts/jsplumb/jsBezier-0.6-min.js" ></script>
     <script type="text/javascript" src="javascripts/jsplumb/jquery.jsPlumb-1.4.1-all.js" ></script>
     <script type="text/javascript">
-      jsPlumb.bind("ready", function () {
 
+      jsPlumb.bind("ready", function () {
+          var firstInstance = jsPplumb().getInstance();
+          firstInstance.importDefaults({});
+
+          console.log("plumb loaded");
       });
+
     </script>
 </head>
 <body>
