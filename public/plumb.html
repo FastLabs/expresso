@@ -1,26 +1,194 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>js plumb </title>
-    <script type="text/javascript" src="javascripts/jsplumb/jquery-1.9.0-min.js" ></script>
-    <script type="text/javascript" src="javascripts/jsplumb/jquery-ui-1.9.2-min.js" ></script>
-    <script type="text/javascript" src="javascripts/jsplumb/jsBezier-0.6-min.js" ></script>
-    <script type="text/javascript" src="javascripts/jsplumb/jquery.jsPlumb-1.4.1-all.js" ></script>
-    <script type="text/javascript">
+    <link rel="stylesheet" href="stylesheets/fllow.css"/>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css"/>
 
-      jsPlumb.bind("ready", function () {
-          var firstInstance = jsPplumb().getInstance();
-          firstInstance.importDefaults({});
-
-          console.log("plumb loaded");
-      });
-
-    </script>
 </head>
 <body>
   <div id='container'>
 
+    <div class='row'>
+        <div class ="col-lg-1">
+            <div class='window' id='window1'></div>
+        </div>
+        <div class ="col-lg-1">
+            <div class='window' id='window2'></div>
+        </div>
+        <div class ="col-lg-1">
+            <div class='window' id='window3'></div>
+        </div>
+        <div class ="col-lg-1">
+            <div class='window' id='window4'></div>
+        </div>
+        <div class ="col-lg-1">
+            <div class='window' id='window5'></div>
+        </div>
+        <div class ="col-lg-1">
+            <div class='window' id='window6'></div>
+        </div>
+    </div>
+
+      <div class='row'>
+          <div class='col-lg-1'>
+
+          </div>
+          <div class ="col-lg-1">
+              <div class='window' id='window6'></div>
+          </div>
+      </div>
+
+      <div class='row'>
+          <div class='col-lg-1'>
+
+          </div>
+          <div class='col-lg-1'>
+
+          </div>
+          <div class ="col-lg-1">
+              <div class='window' id='window6'></div>
+          </div>
+      </div>
+
+
   </div>
-</body>
+
+  <script type="text/javascript" src="javascripts/jsplumb/jquery-1.9.0-min.js" ></script>
+  <script type="text/javascript" src="javascripts/jsplumb/jquery-ui-1.9.2-min.js" ></script>
+  <script type="text/javascript" src="javascripts/jsplumb/jsBezier-0.6-min.js" ></script>
+  <script type="text/javascript" src="javascripts/jsplumb/jquery.jsPlumb-1.4.1-all.js" ></script>
+  <script type="text/javascript">
+
+      jsPlumb.ready(function () {
+
+
+          var firstInstance = jsPlumb.getInstance();
+          var sourceEndpoint = {
+              endpoint:"Dot",
+              paintStyle:{
+                  strokeStyle:"#225588",
+                  fillStyle:"transparent",
+                  radius:7,
+                  lineWidth:2
+              },
+              isSource:true,
+              connector:[ "Flowchart", { stub:[40, 60], gap:10, cornerRadius:5, alwaysRespectStubs:true } ],
+              connectorStyle:connectorPaintStyle,
+              hoverPaintStyle:endpointHoverStyle,
+              connectorHoverStyle:connectorHoverStyle,
+              dragOptions:{},
+              overlays:[
+                  [ "Label", {
+                      location:[0.5, 1.5],
+                      label:"Drag",
+                      cssClass:"endpointSourceLabel"
+                  } ]
+              ]
+          }
+                  , connectorPaintStyle = {
+                      lineWidth:4,
+                      strokeStyle:"#deea18",
+                      joinstyle:"round",
+                      outlineColor:"#EAEDEF",
+                      outlineWidth:2
+                  },
+          // .. and this is the hover style.
+                  connectorHoverStyle = {
+                      lineWidth:4,
+                      strokeStyle:"#2e2aF8"
+                  },
+                  endpointHoverStyle = {fillStyle:"#2e2aF8"},
+          // the definition of source endpoints (the small blue ones)
+                  sourceEndpoint = {
+                      endpoint:"Dot",
+                      paintStyle:{
+                          strokeStyle:"#225588",
+                          fillStyle:"transparent",
+                          radius:7,
+                          lineWidth:2
+                      },
+                      isSource:true,
+                      connector:[ "Flowchart", { stub:[40, 60], gap:10, cornerRadius:5, alwaysRespectStubs:true } ],
+                      connectorStyle:connectorPaintStyle,
+                      hoverPaintStyle:endpointHoverStyle,
+                      connectorHoverStyle:connectorHoverStyle,
+                      dragOptions:{},
+                      overlays:[
+                          [ "Label", {
+                              location:[0.5, 1.5],
+                              label:"Drag",
+                              cssClass:"endpointSourceLabel"
+                          } ]
+                      ]
+                  },
+          // a source endpoint that sits at BottomCenter
+          //	bottomSource = jsPlumb.extend( { anchor:"BottomCenter" }, sourceEndpoint),
+          // the definition of target endpoints (will appear when the user drags a connection)
+                  targetEndpoint = {
+                      endpoint:"Dot",
+                      paintStyle:{ fillStyle:"#558822",radius:11 },
+                      hoverPaintStyle:endpointHoverStyle,
+                      maxConnections:-1,
+                      dropOptions:{ hoverClass:"hover", activeClass:"active" },
+                      isTarget:true,
+                      overlays:[
+                          [ "Label", { location:[0.5, -0.5], label:"Drop", cssClass:"endpointTargetLabel" } ]
+                      ]
+                  },
+                  init = function(connection) {
+                      connection.getOverlay("label").setLabel(connection.sourceId.substring(6) + "-" + connection.targetId.substring(6));
+                      connection.bind("editCompleted", function(o) {
+                          if (typeof console != "undefined")
+                              console.log("connection edited. path is now ", o.path);
+                      });
+                  };
+
+
+          jsPlumb.importDefaults({
+              // default drag options
+              DragOptions : { cursor: 'pointer', zIndex:2000 },
+              // default to blue at one end and green at the other
+              EndpointStyles : [{ fillStyle:'#225588' }, { fillStyle:'#558822' }],
+              // blue endpoints 7 px; green endpoints 11.
+              Endpoints : [ [ "Dot", {radius:7} ], [ "Dot", { radius:11 } ]],
+              // the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
+              // case it returns the 'labelText' member that we set on each connection in the 'init' method below.
+              ConnectionOverlays : [
+                  [ "Arrow", { location:-40 } ],
+                  [ "Label", {
+                      location:0.1,
+                      id:"label",
+                      cssClass:"aLabel"
+                  }]
+              ]
+          });
+
+          var allSourceEndpoints = []
+                  , allTargetEndpoints = [];
+
+          _addEndpoints = function(toId, sourceAnchors, targetAnchors) {
+              for (var i = 0; i < sourceAnchors.length; i++) {
+                  var sourceUUID = toId + sourceAnchors[i];
+                  allSourceEndpoints.push(jsPlumb.addEndpoint(toId, sourceEndpoint, { anchor:sourceAnchors[i], uuid:sourceUUID }));
+              }
+              for (var j = 0; j < targetAnchors.length; j++) {
+                  var targetUUID = toId + targetAnchors[j];
+                  allTargetEndpoints.push(jsPlumb.addEndpoint(toId, targetEndpoint, { anchor:targetAnchors[j], uuid:targetUUID }));
+              }
+          };
+
+          //_addEndpoints("window1", ["TopCenter", "BottomCenter"], ["LeftMiddle", "RightMiddle"]);
+          //_addEndpoints("window2", ["LeftMiddle", "BottomCenter"], ["TopCenter", "RightMiddle"]);
+
+          jsPlumb.bind("jsPlumbConnection", function(connInfo, originalEvent) {
+              init(connInfo.connection);
+          });
+          //jsPlumb.connect({uuids:["window1BottomCenter", "window2TopCenter"], editable:true});
+
+          console.log("plumb loaded");
+      });
+
+  </script>
+  </body>
 </html>

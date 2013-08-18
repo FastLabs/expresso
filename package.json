@@ -5,6 +5,11 @@
   , "dependencies": {
       "express": "2.5.8"
     , "jade": ">= 0.0.1"
+    , "mongodb":">= 0.9.6-7"
+  }
+  , "devDependencies": {
+      "jasmine-node":">=1.0.26"
+      , "amdefine":">=0.0.2"
   }
   , "scripts" : {
        "start": "node app.js"
