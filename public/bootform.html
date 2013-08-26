@@ -6,9 +6,13 @@
     <link href="./stylesheets/docs.css" rel="stylesheet"/>
     <script type="text/javascript" src="javascripts/jsplumb/jquery-1.9.0-min.js" ></script>
     <script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="javascripts/angular/angular.js" ></script>
+    <script type="text/javascript" src="javascripts/application.js" ></script>
+
+
 </head>
-<body data-spy="scroll" data-target="#nav-bar">
-<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+<body data-spy="scroll" data-target="#nav-bar" ng-app="application" ng-controller="appMenuController">
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" >
     <div class="container">
         <div class="navbar-header">
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
@@ -21,17 +25,8 @@
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="../getting-started">Interest Rates</a>
-                </li>
-                <li>
-                    <a href="../css">Equities</a>
-                </li>
-                <li class="active">
-                    <a href="../components">FX</a>
-                </li>
-                <li>
-                    <a href="../javascript">Commodities</a>
+                <li ng-class="appActive('{{option.tag}}')"  ng-repeat="option in appMenu">
+                    <a href="#" ng-click="selectAssetClass('{{option.tag}}')">{{option.title}}</a>
                 </li>
             </ul>
         </nav>
@@ -40,10 +35,20 @@
 
 <div class="row">
     <div class="col-md-3">
+        <div style="padding: 4px"> {{appName}} </div>
         <aside class="bs-sidebar affix-top" role="complementary">
-            <ul id="nav-bar" class="nav bs-sidenav">
 
-                <li class="active">
+            <ul id="nav-bar" class="nav bs-sidenav">
+               <li ng-repeat="ruleset in rulesets">
+                  <a href='#'> {{ruleset.name}}</a>
+                   <ul class="nav" >
+                       <li class="" ng-repeat="rule in ruleset.rules">
+                           <a href='#'> {{rule.name}}</a>
+                       </li>
+
+                   </ul>
+               </li>
+                <!-- <li class="active">
                     <a href="#dropdowns">Dropdowns</a>
                     <ul class="nav">
                         <li class="active"><a href="#dropdowns-example">Example</a></li>
@@ -165,7 +170,7 @@
                         <li><a href="#list-group-badges">Badges</a></li>
                         <li><a href="#list-group-linked">Linked items</a></li>
                         <li><a href="#list-group-custom-content">Custom content</a></li>
-                        <!-- <li><a href="#list-group-pic">Leading picture</a></li> -->
+
                     </ul>
                 </li>
                 <li>
@@ -179,13 +184,13 @@
                 </li>
                 <li><a href="#wells">Wells</a></li>
 
-
+                -->
             </ul>
         </aside>
     </div>
     <div class="col-md-9">
         <div class="page-header">
-            Selected rules
+           <input/>
         </div>
         <div>
             <div id="dropdowns-example" style="height:700px">
