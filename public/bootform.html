@@ -4,10 +4,9 @@
     <title> simple bootstrap form</title>
     <link href="./stylesheets/bootstrap.css" rel="stylesheet"/>
     <link href="./stylesheets/docs.css" rel="stylesheet"/>
-    <script type="text/javascript" src="javascripts/jsplumb/jquery-1.9.0-min.js" ></script>
-    <script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js" ></script>
     <script type="text/javascript" src="javascripts/angular/angular.js" ></script>
     <script type="text/javascript" src="javascripts/application.js" ></script>
+    <script type="text/javascript" src="javascripts/data.js" ></script>
 
 
 </head>
@@ -34,9 +33,9 @@
 </header>
 
 <div class="row">
-    <div class="col-md-3">
+    <div data-spy="affix" class="col-md-3">
         <div style="padding: 4px"> {{appName}} </div>
-        <aside class="bs-sidebar affix-top" role="complementary">
+        <aside  class="bs-sidebar affix" role="complementary">
 
             <ul id="nav-bar" class="nav bs-sidenav">
                <li ng-repeat="ruleset in rulesets">
@@ -48,7 +47,7 @@
 
                    </ul>
                </li>
-                <!-- <li class="active">
+                 <li class="active">
                     <a href="#dropdowns">Dropdowns</a>
                     <ul class="nav">
                         <li class="active"><a href="#dropdowns-example">Example</a></li>
@@ -184,7 +183,7 @@
                 </li>
                 <li><a href="#wells">Wells</a></li>
 
-                -->
+
             </ul>
         </aside>
     </div>
@@ -205,6 +204,8 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="javascripts/jquery-1.11.0.min.js" ></script>
+<script type="text/javascript" src="javascripts/bootstrap/bootstrap.min.js" ></script>
+<script type="text/javascript" src="javascripts/bootstrap/affix.js" ></script>
 </body>
 </html>
